@@ -1,0 +1,46 @@
+
+<% @comments.each do |comment| %>
+    <% if comment.comment_id == nil %>
+        <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <%= image_tag comment.user_avatar, class: "img-fluid"%>
+            </div>
+            <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title"><%= comment.user_name %> Dice:</h5>
+                <p class="card-text"><%= comment.content %></p>
+                <p class="card-text"><small class="text-muted"><%= comment.created_at %></small></p>
+            </div>
+            </div>
+        </div>
+            <%= link_to "Citar comentario", quote_user_path(comment.id), class: "btn btn-danger"%>
+        </div>
+    <% else %>
+        <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <%= image_tag comment.user_avatar, class: "img-fluid"%>
+            </div>
+            <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title"><%= comment.user_name %> Dice:</h5>
+                <%= image_tag comment.father_avatar, class: "img-fluid rounded-circle", width: "30%%"%>
+                <h5 class="card-title"><%= comment.father_name %> Dijo:</h5>
+                <p class="card-text"><%= comment.content %></p>
+                <p class="card-text"><small class="text-muted"><%= comment.created_at %></small></p>
+            </div>
+            </div>
+        </div>
+            <%= link_to "Citar comentario", quote_user_path(comment.id), class: "btn btn-danger"%>
+        </div>
+    <% end %>
+<% end %>
+
+
+<% if user_signed_in? %>
+    <%= link_to 'nuevo comentario',  new_user_comment_path(current_user.id), class: "btn btn-success"%>
+<% end  %>
+
+<%= link_to_next_page @comments, 'mostrar mas paginas', class: "btn btn-info"%>
+<%= link_to_previous_page @comments, 'mostrar mas paginas', class: "btn btn-info"%>
